@@ -33,7 +33,7 @@ module.exports = function() {
 		gulp.task(taskName, function() {
 			var stream = merge(
 				gulp.src(angularSource)
-					.pipe(plugins.filesize())
+					.pipe(plugins.if(jsConfig.filesize, plugins.filesize()))
 					.pipe(plugins.if(jsConfig.traceur, plugins.traceur(pluginsConfig['traceur'])))
 					.pipe(plugins.if(jsConfig.annotate, plugins.ngAnnotate(pluginsConfig['ng-annotate']))),
 				Templates(moduleName, templateSource, module.config)
@@ -47,7 +47,7 @@ module.exports = function() {
 			}
 
 			return stream
-				.pipe(plugins.filesize())
+				.pipe(plugins.if(jsConfig.filesize, plugins.filesize()))
 				.pipe(gulp.dest(Structure.dest.angular(module.config.namespace)));
 		});
 

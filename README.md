@@ -81,7 +81,7 @@ You can edit this structure entirely in the structure config (scroll down for a 
 
 ### Angular
 
-To append dependencies to your angular apps, you can add the deps parameter to your module's angular config. This will go through your modules and find the coherent namespaces, it will append the found files to a deps file in the angular dist folder. 
+To append dependencies to your angular apps, you can add the deps parameter to your module's angular config. This will go through your modules and find the coherent namespaces, it will append the found files to a deps file in the angular dist folder.
 
 ### Options
 
@@ -112,7 +112,8 @@ To append dependencies to your angular apps, you can add the deps parameter to y
 		"traceur": true,
 		"sourcemaps": true,
 		"uglify": false,
-		"annotate": false
+		"annotate": false,
+		"filesize": false
 	},
 	"plugins": {
 		"angular-templatecache": {

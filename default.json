@@ -24,7 +24,8 @@
 		"traceur": true,
 		"sourcemaps": true,
 		"uglify": false,
-		"annotate": false
+		"annotate": false,
+		"filesize": false
 	},
 	"plugins": {
 		"angular-templatecache": {

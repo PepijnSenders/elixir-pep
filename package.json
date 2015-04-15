@@ -1,11 +1,11 @@
 {
   "name": "elixir-pep",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "All around tool for compiling modules from elixir and a config file that will refresh the stream.",
   "main": "index.js",
-  "devDependencies": {
-  	"laravel-elixir": "*",
+  "dependencies": {
     "change-case": "*",
+    "gulp": "^3.8.11",
     "gulp-add-src": "*",
     "gulp-angular-templatecache": "*",
     "gulp-autoprefixer": "*",
@@ -23,11 +23,12 @@
     "gulp-tap": "*",
     "gulp-traceur": "*",
     "gulp-uglify": "*",
+    "laravel-elixir": "*",
     "merge-stream": "*",
     "stream-combiner2": "*",
     "sugar": "*",
     "vinyl": "*"
-	},
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

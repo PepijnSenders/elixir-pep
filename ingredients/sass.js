@@ -17,11 +17,11 @@ module.exports = function() {
 		gulp.task(taskName, function() {
 			return CSSCompiler(
 				gulp.src(sassSource)
-					.pipe(plugins.if(jsConfig.filesize, plugins.filesize()))
+					.pipe(plugins.if(sassConfig.filesize, plugins.filesize()))
 					.pipe(plugins.sass()),
 				module.config
 			)
-			.pipe(plugins.if(jsConfig.filesize, plugins.filesize()))
+			.pipe(plugins.if(sassConfig.filesize, plugins.filesize()))
 			.pipe(gulp.dest(Structure.dest.sass(module.config.namespace)))
 			.pipe(Notify.message('Sass compiled!'));
 		});

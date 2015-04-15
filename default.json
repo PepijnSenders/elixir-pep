@@ -17,7 +17,8 @@
 	},
 	"sass": {
 		"sourcemaps": true,
-		"minify": false
+		"minify": false,
+		"filesize": false
 	},
 	"js": {
 		"bundle": false,

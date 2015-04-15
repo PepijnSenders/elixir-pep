@@ -3,9 +3,11 @@ module.exports = function() {
 	var ModuleContainer = require('./ModuleContainer');
 	var Config = require('./Config');
 	var gulp = require('gulp');
+	var RestartWatcher = require('./RestartWatcher');
 
 	var Pep = {
-		init: function(elixir, config) {
+		init: function(elixir, configFile) {
+			var config = require(configFile);
 			Config.setUserConfig(config);
 
 			var moduleContainer = new ModuleContainer();
@@ -14,6 +16,8 @@ module.exports = function() {
 				.setSequenceDependencies();
 
 			var tasks = moduleContainer.getTasks();
+
+			new RestartWatcher(configFile);
 		}
 	};
 

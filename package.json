@@ -1,0 +1,44 @@
+{
+  "name": "elixir-pep",
+  "version": "1.0.0",
+  "description": "All around tool for compiling modules from elixir and a config file that will refresh the stream.",
+  "main": "index.js",
+  "devDependencies": {
+  	"laravel-elixir": "*",
+    "change-case": "*",
+    "gulp-add-src": "*",
+    "gulp-angular-templatecache": "*",
+    "gulp-autoprefixer": "*",
+    "gulp-clean": "*",
+    "gulp-concat": "*",
+    "gulp-filesize": "*",
+    "gulp-if": "*",
+    "gulp-load-plugins": "*",
+    "gulp-minify-css": "*",
+    "gulp-ng-annotate": "*",
+    "gulp-notify": "*",
+    "gulp-plumber": "*",
+    "gulp-sass": "*",
+    "gulp-sourcemaps": "*",
+    "gulp-tap": "*",
+    "gulp-traceur": "*",
+    "gulp-uglify": "*",
+    "merge-stream": "*",
+    "stream-combiner2": "*",
+    "sugar": "*",
+    "vinyl": "*"
+	},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/PepijnSenders/elixir-pep.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PepijnSenders/elixir-pep/issues"
+  },
+  "homepage": "https://github.com/PepijnSenders/elixir-pep"
+}

@@ -1,5 +1,6 @@
 module.exports = function() {
 
+	require('sugar');
 	var TaskContainer = function() {};
 	TaskContainer.prototype = new Array();
 
@@ -17,13 +18,7 @@ module.exports = function() {
 			return sequence;
 		},
 
-		setChainDependencies: function(sequenceChain) {
-			for (var i = 0; i < this.length; i++) {
-				var task = this[i];
-
-				task.dep = task.dep.concat(sequenceChain);
-			}
-		}
+		setChainDependencies: function(sequenceChain) {}
 
 	});
 

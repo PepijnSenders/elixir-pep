@@ -1,26 +1,7 @@
-require('sugar');
+var elixir = require('laravel-elixir');
 
-module.exports = function() {
+elixir.extend('pep', function(config) {
 
-	var ModuleContainer = require('./ModuleContainer');
-	var Config = require('./Config');
-	var gulp = require('gulp');
+	require('./helpers/Pep').init(this, config);
 
-	var Pep = {
-		start: function(config) {
-			Config.setUserConfig(config);
-
-			var moduleContainer = new ModuleContainer();
-
-			moduleContainer.build()
-				.setSequenceDependencies();
-
-			gulp.task('default', moduleContainer.getTasks(), function() {
-
-			});
-		}
-	};
-
-	return Pep;
-
-}();
+});

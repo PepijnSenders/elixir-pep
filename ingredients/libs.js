@@ -1,19 +1,35 @@
 module.exports = function() {
 
-	var Config = require('../Config');
-	var Structure = require('../Structure');
-	var Notify = require('../Notify');
+	require('sugar');
+	var Config = require('../helpers/Config');
+	var Structure = require('../helpers/Structure');
+	var Notify = require('../helpers/Notify');
 	var gulp = require('gulp');
 	var plugins = require('gulp-load-plugins')();
+	var JSCompiler = require('./commands/JSCompiler');
 
-	return function(localConfig) {
-		var taskName = this.getTaskName('libs', localConfig);
+	return function(module) {
+		var taskName = this.getTaskName('libs', module.config);
+
+		var libsConfig = Config.load('libs', module.config);
+
+		libsConfig = Object.merge({
+			js: {
+				bundle: (libsConfig.name || module.config.namespace) + '.bundle.js'
+			}
+		}, libsConfig, true);
+
+		libsConfig.js.traceur = false;
 
 		gulp.task(taskName, function() {
-
+			return JSCompiler(gulp.src(libsConfig.src), libsConfig)
+				.pipe(gulp.dest(Structure.dest.libs(module.config.namespace)));
 		});
 
-		return gulp.tasks[taskName];
+		var task = gulp.tasks[taskName];
+		task.fileDependencies = [libsConfig.src].flatten();
+
+		return task;
 	};
 
 }();

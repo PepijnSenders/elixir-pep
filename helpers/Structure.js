@@ -17,6 +17,10 @@ module.exports = function() {
 				return [Structure.getConfig().source.basePath, namespace, Structure.getConfig().source.angular].join('/');
 			},
 
+			templates: function(namespace) {
+				return [Structure.getConfig().source.basePath, namespace, Structure.getConfig().source.templates].join('/');
+			},
+
 			libs: function(namespace) {
 				return [Structure.getConfig().source.basePath, namespace, Structure.getConfig().source.libs].join('/');
 			}
@@ -32,6 +36,12 @@ module.exports = function() {
 					Structure.source.angular(namespace) + '/app.js',
 					Structure.source.angular(namespace) + '/config.js',
 					Structure.source.angular(namespace) + '/**/*.js'
+				];
+			},
+
+			templates: function(namespace) {
+				return [
+					Structure.source.templates(namespace) + '/**/*.html'
 				];
 			},
 

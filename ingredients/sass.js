@@ -1,28 +1,33 @@
 module.exports = function() {
 
-	var Config = require('../Config');
-	var Structure = require('../Structure');
-	var Notify = require('../Notify');
+	var Config = require('../helpers/Config');
+	var Structure = require('../helpers/Structure');
+	var Notify = require('../helpers/Notify');
 	var gulp = require('gulp');
 	var plugins = require('gulp-load-plugins')();
 	var CSSCompiler = require('./commands/CSSCompiler');
 
-	return function(moduleConfig) {
-		var taskName = this.getTaskName('sass', moduleConfig);
+	return function(module) {
+		var taskName = this.getTaskName('sass', module.config);
 
-		var sassConfig = Config.load('sass', moduleConfig);
+		var sassConfig = Config.load('sass', module.config);
+
+		var sassSource = sassConfig.src || Structure.sourceFiles.sass(module.config.namespace);
 
 		gulp.task(taskName, function() {
 			return CSSCompiler(
-				gulp.src(sassConfig.src || Structure.sourceFiles.sass(moduleConfig.namespace))
+				gulp.src(sassSource)
 					.pipe(plugins.sass()),
-				moduleConfig
+				module.config
 			)
-			.pipe(gulp.dest(Structure.dest.sass(moduleConfig.namespace)))
+			.pipe(gulp.dest(Structure.dest.sass(module.config.namespace)))
 			.pipe(Notify.message('Sass compiled!'));
 		});
 
-		return gulp.tasks[taskName];
+		var task = gulp.tasks[taskName];
+		task.fileDependencies = [sassSource].flatten();
+
+		return task;
 	};
 
 }();

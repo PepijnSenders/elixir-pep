@@ -5,6 +5,7 @@
 			"basePath": "./resources/assets/modules",
 			"sass": "sass",
 			"angular": "angular",
+			"templates": "templates",
 			"libs": "libs"
 		},
 		"dest": {
@@ -26,6 +27,14 @@
 		"annotate": false
 	},
 	"plugins": {
+		"angular-templatecache": {
+			"root": "",
+			"module": "templates",
+			"standalone": false,
+			"moduleSystem": "",
+			"templateHeader": "angular.module(\"<%= module %>\"<%= standalone %>).run([\"$templateCache\", function($templateCache) {",
+			"templateFooter": "}]);"
+		},
 		"uglify": {
 			"mangle": true,
 			"output": {

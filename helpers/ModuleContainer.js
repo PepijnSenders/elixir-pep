@@ -1,5 +1,6 @@
 module.exports = function() {
 
+	require('sugar');
 	var Config = require('./Config');
 	var Module = require('./Module');
 
@@ -23,6 +24,18 @@ module.exports = function() {
 			}
 
 			return this;
+		},
+
+		getFileDependencies: function() {
+			var fileDependencies = [];
+
+			for (var i = 0; i < this.length; i++) {
+				var module = this[i];
+
+				fileDependencies = fileDependencies.concat(module.fileDependencies);
+			}
+
+			return fileDependencies;
 		},
 
 		setSequenceDependencies: function() {

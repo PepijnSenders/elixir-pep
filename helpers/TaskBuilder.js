@@ -6,10 +6,10 @@ module.exports = function() {
 			return [config.namespace, operation].join('@');
 		},
 
-		sass: require('./ingredients/sass'),
-		angular: require('./ingredients/angular'),
-		libs: require('./ingredients/libs'),
-		'angular-deps': require('./ingredients/angular-deps')
+		sass: require('../ingredients/sass'),
+		angular: require('../ingredients/angular'),
+		libs: require('../ingredients/libs'),
+		'angular-deps': require('../ingredients/angular-deps')
 
 	};
 

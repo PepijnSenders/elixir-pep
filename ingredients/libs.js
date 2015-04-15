@@ -22,7 +22,8 @@ module.exports = function() {
 		libsConfig.js.traceur = false;
 
 		gulp.task(taskName, function() {
-			return JSCompiler(gulp.src(libsConfig.src), libsConfig)
+			return JSCompiler(gulp.src(libsConfig.src).pipe(plugins.filesize()), libsConfig)
+				.pipe(plugins.filesize())
 				.pipe(gulp.dest(Structure.dest.libs(module.config.namespace)));
 		});
 

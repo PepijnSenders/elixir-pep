@@ -5,7 +5,7 @@
   "main": "index.js",
   "dependencies": {
     "change-case": "*",
-    "gulp": "^3.8.11",
+    "gulp": "*",
     "gulp-add-src": "*",
     "gulp-angular-templatecache": "*",
     "gulp-autoprefixer": "*",

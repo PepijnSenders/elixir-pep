@@ -28,6 +28,8 @@ module.exports = function() {
 							cluster.fork();
 						}
 					});
+					// Hacky code coming up (trick gulp)
+					elixir(function(mix) {});
 					gulp.task('default', function() {});
 				} else {
 					this.init(configFile);

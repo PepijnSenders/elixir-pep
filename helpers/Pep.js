@@ -24,6 +24,10 @@ module.exports = function() {
 				.setSequenceDependencies();
 
 			var tasks = moduleContainer.getTasks();
+
+			gulp.task('default', tasks, function() {
+				process.exit(0);
+			});
 		}
 	};
 

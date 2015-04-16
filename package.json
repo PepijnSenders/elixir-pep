@@ -1,6 +1,6 @@
 {
   "name": "elixir-pep",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description": "All around tool for compiling modules from elixir and a config file that will refresh the stream.",
   "main": "index.js",
   "dependencies": {

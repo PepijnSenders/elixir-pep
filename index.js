@@ -14,7 +14,7 @@ module.exports = function() {
 	var Loader = require('./console/Loader');
 
 	var Machine = {
-		RESTART_CODE: 304981814,
+		RESTART_CODE: 12,
 		start: function(configFile, cb) {
 			if (numCPUs <= 1) {
 				util.log(util.colors.red('Only one CPU is supported on this machine, auto restarting is not possible!'));

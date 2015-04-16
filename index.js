@@ -20,7 +20,7 @@ module.exports = function() {
 				util.log(util.colors.red('Only one CPU is supported on this machine, auto restarting is not possible!'));
 			} else {
 
-				if (process.argv[2].match(/^console\@/)) {
+				if (process.argv.length >= 3 && process.argv[2].match(/^console\@/)) {
 					this.console(configFile);
 				} else {
 					if (cluster.isMaster) {

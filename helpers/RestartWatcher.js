@@ -1,14 +1,12 @@
 module.exports = function() {
 
-	var gulp = require('gulp');
+	var fs = require('fs');
 
 	var RestartWatcher = function(configFile) {
 
-		gulp.task('restart', function() {
-			console.log('restart');
+		fs.watchFile(configFile, function(curr, prev) {
+			console.log(arguments);
 		});
-
-		gulp.watch(configFile, ['restart']);
 
 	};
 

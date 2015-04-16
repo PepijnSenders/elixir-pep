@@ -5,6 +5,7 @@ module.exports = function() {
 	var TaskContainer = require('./TaskContainer');
 	var TaskBuilder = require('./TaskBuilder');
 	var Structure = require('./Structure');
+	var Task = require('./Task');
 	var changeCase = require('change-case');
 	var elixir = require('laravel-elixir');
 
@@ -17,17 +18,17 @@ module.exports = function() {
 
 		getAppName: function(name, namespace) {
 			return (name || changeCase.title(namespace) + 'App');
-		}
-
-	});
-
-	_.extend(Module.prototype, {
+		},
 
 		availableMethods: [
 			'sass',
 			'angular',
 			'libs'
-		],
+		]
+
+	});
+
+	_.extend(Module.prototype, {
 
 		fileDependencies: [],
 
@@ -44,16 +45,14 @@ module.exports = function() {
 		},
 
 		build: function() {
-			for (var i = 0; i < this.availableMethods.length; i++) {
-				var method = this.availableMethods[i];
+			for (var i = 0; i < Module.availableMethods.length; i++) {
+				var method = Module.availableMethods[i];
 
 				if (this.config[method] || fs.existsSync(Structure.source[method](this.config.namespace))) {
 					var task = TaskBuilder[method](this)
 					this.taskContainer.push(task);
 
-					// @TODO create class from task so we can create dependencies per task not per module
-					elixir.config.registerWatcher(task.name, task.fileDependencies);
-					elixir.config.queueTask(task.name);
+					Task.add(task.name, task.fileDependencies);
 				}
 			}
 		},
@@ -78,8 +77,7 @@ module.exports = function() {
 				var task = TaskBuilder['angular-deps'](this, []);
 				this.taskContainer.push(task);
 
-				elixir.config.registerWatcher(task.name, task.fileDependencies);
-				elixir.config.queueTask(task.name);
+				Task.add(task.name, task.fileDependencies);
 			}
 		}
 

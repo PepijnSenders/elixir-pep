@@ -11,6 +11,7 @@ module.exports = function() {
 	var util = require('gulp-util');
 	var gulp = require('gulp');
 	var RestartWatcher = require('./helpers/RestartWatcher');
+	var Loader = require('./console/Loader');
 
 	var Machine = {
 		RESTART_CODE: 304981814,
@@ -19,27 +20,31 @@ module.exports = function() {
 				util.log(util.colors.red('Only one CPU is supported on this machine, auto restarting is not possible!'));
 			} else {
 
-				if (cluster.isMaster) {
-					util.log = util.noop;
-					cluster.fork();
-
-					cluster.on('exit', function(worker, code) {
-						if (code === Machine.RESTART_CODE) {
-							cluster.fork();
-						}
-					});
-					// Hacky code coming up (trick gulp)
-					elixir(function(mix) {});
-					gulp.task('default', function() {});
+				if (process.argv[2].match(/^console\@/)) {
+					this.console(configFile);
 				} else {
-					this.init(configFile);
+					if (cluster.isMaster) {
+						util.log = util.noop;
+						cluster.fork();
 
-					elixir(function(mix) {
-						mix.pep();
-						cb(mix);
-					});
+						cluster.on('exit', function(worker, code) {
+							if (code === Machine.RESTART_CODE) {
+								cluster.fork();
+							}
+						});
+						// Hacky code coming up (trick gulp)
+						elixir(function(mix) {});
+						gulp.task('default', function() {});
+					} else {
+						this.init(configFile);
 
-					new RestartWatcher(this.RESTART_CODE, configFile);
+						elixir(function(mix) {
+							mix.pep();
+							cb(mix);
+						});
+
+						new RestartWatcher(this.RESTART_CODE, configFile);
+					}
 				}
 
 			}
@@ -51,6 +56,11 @@ module.exports = function() {
 				require('./helpers/Pep').init(configFile);
 
 			});
+		},
+
+		console: function(configFile) {
+			var loader = new Loader(configFile);
+			loader.plug();
 		}
 	};
 

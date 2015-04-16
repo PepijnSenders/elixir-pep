@@ -3,16 +3,28 @@ module.exports = function() {
 	var _ = require('underscore');
 	var Config = require('./Config');
 	var Module = require('./Module');
+	var util = require('gulp-util');
 
 	var ModuleContainer = function() {
 		var modules = Config.load('modules');
 		for (var i = 0; i < modules.length; i++) {
 			var moduleConfig = modules[i];
+			if (!!~ModuleContainer.reservedNamespaces.indexOf(moduleConfig.namespace)) {
+				util.log(util.colors.red(moduleConfig.namespace + ' is a reserved namespace.'));
+			}
 			var module = new Module(moduleConfig);
 			this.push(module);
 		}
 	};
 	ModuleContainer.prototype = new Array();
+
+	_.extend(ModuleContainer, {
+
+		reservedNamespaces: [
+			'console'
+		]
+
+	});
 
 	_.extend(ModuleContainer.prototype, {
 

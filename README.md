@@ -24,6 +24,17 @@ machine.start(__dirname + '/' + (util.env.config || 'config'), function(mix) {
 });
 ```
 
+### Exceptions
+
+Reserved namespaces are: console.
+
+### Console tool
+
+There a couple of built-in tools to improve work speed.
+
+- gulp console@create-module
+	- Will create a module in your config file
+
 ### Configuration
 
 As you can see in the previous example the pep function requires only ONE argument and this is the config in the form of an object.

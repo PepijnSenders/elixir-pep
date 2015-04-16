@@ -65,6 +65,10 @@ You can edit all the different configurations of all different modules by callin
 If you only want this for a module, you can put it into the config object of that module, this will cascade down in the configuration and overwrite the properties that you define here.
 You can also just create the folders itsself and define a module and its namespace and the module will think of the rest itself.
 
+### Running tasks
+
+To run seperate tasks you can execute ```gulp {module}@{namespace}```, so for example you can run: ```gulp demo@angular``` and this will run only the angular task of the demo module.
+
 ### Structure
 
 The recommended structure for this module is something like:
@@ -81,6 +85,25 @@ You can edit this structure entirely in the structure config (scroll down for a 
 ### Angular
 
 To append dependencies to your angular apps, you can add the deps parameter to your module's angular config. This will go through your modules and find the coherent namespaces, it will append the found files to a deps file in the angular dist folder.
+
+### Walktrough
+
+To create a module you could go through the following steps:
+
+1. Open the config.json file (if it's not in your root folder yet, create an empty one)
+2. Add an object to the modules array in the root object of the config.json file
+3. Create a namespace key in this module object, for example for the demo namespace:
+
+```
+{
+	"modules": [{
+		"namespace": "demo"
+	}]
+}
+```
+
+4. This is practically enough for a basic setup, if you have your folder structure ordered as the Structure configuration. So if you have a sass folder in your namespace, sass will compile to css in the public dist folder.
+5. You can add any of the different compile methods (currently: sass, angular and/or libs) to the module config with different plugin configuration and the files to compile added to the ```src``` key.
 
 ### Options
 

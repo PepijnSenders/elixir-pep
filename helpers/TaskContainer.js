@@ -1,10 +1,11 @@
 module.exports = function() {
 
-	require('sugar');
+	var _ = require('underscore');
+
 	var TaskContainer = function() {};
 	TaskContainer.prototype = new Array();
 
-	Object.merge(TaskContainer.prototype, {
+	_.extend(TaskContainer.prototype, {
 
 		getTaskSequence: function() {
 			var sequence = [];

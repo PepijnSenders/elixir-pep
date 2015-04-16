@@ -1,11 +1,17 @@
 module.exports = function() {
 
 	var fs = require('fs');
+	var path = require('path');
+	var Pep = require('./Pep');
 
-	var RestartWatcher = function(configFile) {
+	var RestartWatcher = function(code, configFile) {
 
-		fs.watchFile(configFile, function(curr, prev) {
-			console.log(arguments);
+		if (!path.extname(configFile)) {
+			configFile = configFile + '.json';
+		}
+
+		fs.watchFile(configFile, function() {
+			process.exit(code);
 		});
 
 	};

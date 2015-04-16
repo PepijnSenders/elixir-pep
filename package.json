@@ -1,6 +1,6 @@
 {
   "name": "elixir-pep",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "All around tool for compiling modules from elixir and a config file that will refresh the stream.",
   "main": "index.js",
   "dependencies": {
@@ -41,5 +41,9 @@
   "bugs": {
     "url": "https://github.com/PepijnSenders/elixir-pep/issues"
   },
-  "homepage": "https://github.com/PepijnSenders/elixir-pep"
+  "homepage": "https://github.com/PepijnSenders/elixir-pep",
+  "devDependencies": {
+    "underscore": "^1.8.3",
+    "underscore-deep-extend": "0.0.5"
+  }
 }

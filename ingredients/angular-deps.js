@@ -5,6 +5,8 @@ module.exports = function() {
 	var plugins = require('gulp-load-plugins')();
 	var changeCase = require('change-case');
 	var gulp = require('gulp');
+	var _ = require('underscore');
+	var Notify = require('../helpers/Notify');
 
 	return function(module, sequenceChain) {
 		var taskName = this.getTaskName('angular-deps', module.config);
@@ -19,11 +21,12 @@ module.exports = function() {
 		gulp.task(taskName, sequenceChain, function() {
 			return gulp.src(src)
 				.pipe(plugins.concat('deps.js'))
-				.pipe(gulp.dest(Structure.dest.angular(module.config.namespace)));
+				.pipe(gulp.dest(Structure.dest.angular(module.config.namespace)))
+				.pipe(Notify.message(taskName + ' compiled!'));
 		});
 
 		var task = gulp.tasks[taskName];
-		task.fileDependencies = [src].flatten();
+		task.fileDependencies = _.flatten([src]);
 
 		return task;
 	};

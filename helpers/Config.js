@@ -1,8 +1,8 @@
 module.exports = function() {
 
-	require('sugar');
 	var util = require('gulp-util');
 	var defaultConfig = require('../default.json');
+	var _ = require('underscore');
 
 	var userConfig = {
 		production: !!util.env.production
@@ -11,7 +11,7 @@ module.exports = function() {
 	var Config = {
 
 		baseConfig: function() {
-			return Object.merge(defaultConfig, userConfig, true);
+			return _.deepExtend(defaultConfig, userConfig);
 		},
 
 		load: function(name, moduleConfig) {
@@ -21,17 +21,17 @@ module.exports = function() {
 			var configPart = name in baseConfig ? baseConfig[name] : {};
 
 			var result;
-			if (Object.isObject(configPart)) {
-				result = Object.merge(configPart, moduleConfig[name], true);
+			if (_.isObject(configPart)) {
+				result = _.deepExtend(configPart, moduleConfig[name]);
 			} else {
 				result = configPart;
 			}
 
-			return Object.clone(result);
+			return _.clone(result);
 		},
 
 		setUserConfig: function(config) {
-			Object.merge(userConfig, config);
+			_.deepExtend(userConfig, config);
 		}
 
 	};

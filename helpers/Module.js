@@ -1,6 +1,6 @@
 module.exports = function() {
 
-	require('sugar');
+	var _ = require('underscore');
 	var fs = require('fs');
 	var TaskContainer = require('./TaskContainer');
 	var TaskBuilder = require('./TaskBuilder');
@@ -13,7 +13,7 @@ module.exports = function() {
 		this.taskContainer = new TaskContainer();
 	};
 
-	Object.merge(Module, {
+	_.extend(Module, {
 
 		getAppName: function(name, namespace) {
 			return (name || changeCase.title(namespace) + 'App');
@@ -21,7 +21,7 @@ module.exports = function() {
 
 	});
 
-	Object.merge(Module.prototype, {
+	_.extend(Module.prototype, {
 
 		availableMethods: [
 			'sass',
@@ -54,6 +54,21 @@ module.exports = function() {
 					// @TODO create class from task so we can create dependencies per task not per module
 					elixir.config.registerWatcher(task.name, task.fileDependencies);
 					elixir.config.queueTask(task.name);
+				}
+			}
+		},
+
+		remove: function() {
+			for (var i = 0; i < this.taskContainer.length; i++) {
+				var task = this.taskContainer[i];
+
+				var index = elixir.config.tasks.indexOf(task.name);
+				if (index > - 1) {
+					elixir.config.tasks.splice(index, 1);
+				}
+
+				if (task.name in elixir.config.watchers.default) {
+					delete elixir.config.watchers.default[task.name];
 				}
 			}
 		},

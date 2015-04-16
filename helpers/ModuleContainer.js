@@ -1,6 +1,6 @@
 module.exports = function() {
 
-	require('sugar');
+	var _ = require('underscore');
 	var Config = require('./Config');
 	var Module = require('./Module');
 
@@ -14,7 +14,18 @@ module.exports = function() {
 	};
 	ModuleContainer.prototype = new Array();
 
-	Object.merge(ModuleContainer.prototype, {
+	_.extend(ModuleContainer.prototype, {
+
+		remove: function() {
+			for (var i = 0; i < this.length; i++) {
+				var module = this[i];
+
+				module.remove();
+			}
+			this.removeAt(0, this.length);
+
+			console.log(this);
+		},
 
 		build: function() {
 			for (var i = 0; i < this.length; i++) {

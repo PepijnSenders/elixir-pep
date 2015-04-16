@@ -1,6 +1,6 @@
 module.exports = function() {
 
-	require('sugar');
+	var _ = require('underscore');
 	var Config = require('../helpers/Config');
 	var Structure = require('../helpers/Structure');
 	var Notify = require('../helpers/Notify');
@@ -13,22 +13,23 @@ module.exports = function() {
 
 		var libsConfig = Config.load('libs', module.config);
 
-		libsConfig = Object.merge({
+		libsConfig = _.deepExtend({
 			js: {
 				bundle: (libsConfig.name || module.config.namespace) + '.bundle.js'
 			}
-		}, libsConfig, true);
+		}, libsConfig);
 
 		libsConfig.js.traceur = false;
 
 		gulp.task(taskName, function() {
 			return JSCompiler(gulp.src(libsConfig.src).pipe(plugins.if(libsConfig.js.filesize, plugins.filesize())), libsConfig)
 				.pipe(plugins.if(libsConfig.js.filesize, plugins.filesize()))
-				.pipe(gulp.dest(Structure.dest.libs(module.config.namespace)));
+				.pipe(gulp.dest(Structure.dest.libs(module.config.namespace)))
+				.pipe(Notify.message(taskName + ' compiled!'));
 		});
 
 		var task = gulp.tasks[taskName];
-		task.fileDependencies = [libsConfig.src].flatten();
+		task.fileDependencies = _.flatten([libsConfig.src]);
 
 		return task;
 	};

@@ -4,13 +4,12 @@ module.exports = function() {
 
 	var Notify = {
 
-		title: 'Laravel Elixir',
+		title: 'Elixir Pep',
 
 		message: function(message) {
 			return notify({
 				title: this.title,
 				message: message,
-				icon: __dirname + '/../../icons/laravel.png',
 				onLast: true
 			});
 		},
@@ -18,8 +17,7 @@ module.exports = function() {
 		error: function(e, message) {
 			notify.onError({
 				title: this.title,
-				message: message + ': <%= error.message %>',
-				icon: __dirname + '/../../icons/fail.png'
+				message: message + ': <%= error.message %>'
 			})(e);
 			console.log(e);
 		},
@@ -28,7 +26,6 @@ module.exports = function() {
 			return notify({
 				title: 'Green!',
 				message: 'Your ' + framework + ' tests passed!',
-				icon: __dirname + '/../../icons/pass.png',
 				onLast: true
 			});
 		},
@@ -36,12 +33,12 @@ module.exports = function() {
 		forFailedTests: function(e, framework) {
 			return notify.onError({
 				title: 'Red!',
-				message: 'Your ' + framework + ' tests failed!',
-				icon: __dirname + '/../../icons/fail.png'
+				message: 'Your ' + framework + ' tests failed!'
 			})(e);
 		}
 
 	};
 
 	return Notify;
+
 }();

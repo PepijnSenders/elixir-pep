@@ -1,6 +1,6 @@
 module.exports = function() {
 
-	require('sugar');
+	var _ = require('underscore');
 	var Config = require('../helpers/Config');
 	var Structure = require('../helpers/Structure');
 	var gulp = require('gulp');
@@ -11,6 +11,7 @@ module.exports = function() {
 	var changeCase = require('change-case');
 	var Templates = require('./commands/Templates');
 	var merge = require('merge-stream');
+	var Notify = require('../helpers/Notify');
 
 	return function(module) {
 		var taskName = this.getTaskName('angular', module.config);
@@ -18,12 +19,12 @@ module.exports = function() {
 
 		var moduleName = require('../helpers/Module').getAppName(angularConfig.name, module.config.namespace);
 
-		angularConfig = Object.merge({
+		angularConfig = _.deepExtend({
 			js: {
 				annotate: true,
 				bundle: moduleName + '.js'
 			}
-		}, angularConfig, true);
+		}, angularConfig);
 		var jsConfig = Config.load('js', angularConfig);
 		var pluginsConfig = Config.load('plugins', angularConfig);
 
@@ -48,11 +49,12 @@ module.exports = function() {
 
 			return stream
 				.pipe(plugins.if(jsConfig.filesize, plugins.filesize()))
-				.pipe(gulp.dest(Structure.dest.angular(module.config.namespace)));
+				.pipe(gulp.dest(Structure.dest.angular(module.config.namespace)))
+				.pipe(Notify.message(taskName + ' compiled!'));
 		});
 
 		var task = gulp.tasks[taskName];
-		task.fileDependencies = [angularSource, templateSource].flatten();
+		task.fileDependencies = _.flatten([angularSource, templateSource]);
 
 		return task;
 	};

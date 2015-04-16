@@ -1,6 +1,6 @@
 # elixir-pep
 
-All around tool for compiling modules from elixir and a config file that will refresh the stream.
+All around tool for compiling modules from elixir and a config file that when changed will automatically refresh the stream.
 
 Currently supported compilers:
 - Angular (with templateCache included)
@@ -16,12 +16,11 @@ Require the package in your gulpfile.js and add the pep function to the mix obje
 Example gulpfile:
 ```
 var util = require('gulp-util');
-var elixir = require('laravel-elixir');
 
-require('elixir-pep');
+var machine = require('elixir-pep');
 
-elixir(function(mix) {
-	mix.pep(require(util.env.config || './config'));
+machine.start(__dirname + '/' + (util.env.config || 'config'), function(mix) {
+	// Normal elixir functions
 });
 ```
 

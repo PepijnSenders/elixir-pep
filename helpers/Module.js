@@ -74,7 +74,7 @@ module.exports = function() {
 
 		checkDeps: function(sequenceChain) {
 			if (this.config.angular && this.config.angular.deps) {
-				var task = TaskBuilder['angular-deps'](this, []);
+				var task = TaskBuilder['angular-deps'](this);
 				this.taskContainer.push(task);
 
 				Task.add(task.name, task.fileDependencies);

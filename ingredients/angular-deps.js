@@ -8,17 +8,20 @@ module.exports = function() {
 	var _ = require('underscore');
 	var Notify = require('../helpers/Notify');
 
-	return function(module, sequenceChain) {
+	return function(module) {
 		var taskName = this.getTaskName('angular-deps', module.config);
 
 		var angularConfig = Config.load('angular', module.config);
 
-		var src = [];
+		var src = [], taskDeps = [];
 		for (var i = 0; i < angularConfig.deps.length; i++) {
 			src.push(Structure.dest.angular(angularConfig.deps[i]) + '/**/*.js');
+			taskDeps.push(require('../helpers/TaskBuilder').getTaskName('angular', {
+				namespace: angularConfig.deps[i]
+			}));
 		}
 
-		gulp.task(taskName, sequenceChain, function() {
+		gulp.task(taskName, taskDeps, function() {
 			return gulp.src(src)
 				.pipe(plugins.concat('deps.js'))
 				.pipe(gulp.dest(Structure.dest.angular(module.config.namespace)))
